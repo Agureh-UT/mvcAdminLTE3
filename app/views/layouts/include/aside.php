@@ -7,9 +7,8 @@ $url = isset($path) ? explode('/', ltrim($path, '/')) : [];
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="<?= PROOT ?>app/views/layouts/dist/img/AdminLTELogo.png" alt="" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
+    <a href="<?= PROOT ?>home" class="brand-link">
+        <img src="<?= PROOT ?>app/views/layouts/dist/img/AdminLTELogo.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light"><?= MENU_BRAND ?></span>
     </a>
 
@@ -29,11 +28,11 @@ $url = isset($path) ? explode('/', ltrim($path, '/')) : [];
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->                         
+                     with font-awesome or any other icon font library -->
                 <?php
-                if (Users::currentUser()):
+                if (Users::currentUser()) :
                     include 'loggedin.php';
-                else:
+                else :
                     include 'quest.php';
                 endif;
                 ?>

@@ -9,7 +9,7 @@
         My Contacts
     </div>
     <div class="card-body">
-      <p><a href="<?=PROOT?>contacts/add" class="btn btn-success btn-sm"><i class="fa fa-plus-square"></i> Add New</a></p>
+      <p><a href="<?=PROOT?>contacts/add" class="btn btn-success btn-sm"><i class="fa fa-plus-square"></i> เพิ่ม</a></p>
 <div class="table-responsive">
     <table class="table table-bordered" width="100%" cellspacing="0">
         <thead>

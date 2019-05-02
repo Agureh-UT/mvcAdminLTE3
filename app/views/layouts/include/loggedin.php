@@ -44,7 +44,7 @@
         </a>
         <ul class="nav nav-treeview ul-sub">
             <li class="nav-item">
-                <a href="<?= PROOT ?>documents/index" class="nav-link <?= ($url[0] == 'documents' && $url[1] == 'index') ? "active" : "" ?>">
+                <a href="<?= PROOT ?>documents?page=1" class="nav-link <?= ($url[0] == 'documents' && $url[1] == 'index') ? "active" : "" ?>">
                     <i class="fa fa-file-text-o nav-icon"></i>
                     <p>รายการเอกสาร</p>
                 </a>
@@ -65,7 +65,7 @@
         <a href="#" class="nav-link <?= ($url[0] == 'contacts') ? "active" : "" ?>">
             <i class="nav-icon fa fa-id-card text-gray"></i>
             <p>
-                Contacts
+                รายชื่อการติดต่อ
                 <i class="right fa fa-angle-left"></i>
             </p>
         </a>
@@ -73,13 +73,13 @@
             <li class="nav-item">
                 <a href="<?= PROOT ?>contacts/index" class="nav-link <?= ($url[0] == 'contacts' && $url[1] == 'index') ? "active" : "" ?>">
                     <i class="fa fa-id-card-o nav-icon"></i>
-                    <p>My Contacts</p>
+                    <p>รายการรายชื่อ</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="<?= PROOT ?>contacts/add" class="nav-link <?= ($url[0] == 'contacts' && $url[1] == 'add') ? "active" : "" ?>">
                     <i class="fa fa-file-o nav-icon"></i>
-                    <p>Add Contact</p>
+                    <p>เพื่มรายชื่อ</p>
                 </a>
             </li>
         </ul>
@@ -91,7 +91,7 @@
     <a href="<?= PROOT ?>register/logout" class="nav-link">
         <i class="nav-icon fa fa-power-off text-danger"></i>
         <p>
-            Logout
+            ออกจากระบบ
         </p>
     </a>
 </li>

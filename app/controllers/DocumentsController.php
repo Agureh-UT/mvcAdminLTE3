@@ -10,35 +10,30 @@ use App\Models\Documents;
 use App\Models\DocType;
 use App\Models\Users;
 
-class DocumentsController extends Controller {
+class DocumentsController extends Controller
+{
 
-    public function __construct($controller, $action) {
+    public function __construct($controller, $action)
+    {
         parent::__construct($controller, $action);
         $this->view->setLayout('default');
         $this->load_model('Documents');
     }
 
-    public function indexAction() {
-        $num = 0;
-        $e_page = 2;
-        $step_num = 0;
-        if (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] == 1)) {
-            $_GET['page'] = 1;
-            $step_num = 0;
-            $s_page = 0;
-        } else {
-            $s_page = $_GET['page'] - 1;
-            $step_num = $_GET['page'] - 1;
-            $s_page = $s_page * $e_page;
-        }
-        $documents = $this->DocumentsModel->docHasTypeOwner($s_page, $e_page);
+    public function indexAction()
+    {
+        $limit = 2;
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * $limit;
+
+        $documents = $this->DocumentsModel->docHasTypeOwner($start, $limit);
         $this->view->documents = $documents;
         $this->view->render('documents/index');
     }
 
-    public function addAction() {
+    public function addAction()
+    {
         $document = new Documents();
-        //$data = UPLOADS_HOST;
         if ($this->request->isPost()) {
             $this->request->csrfCheck();
             $document->assign($this->request->get());
@@ -47,7 +42,6 @@ class DocumentsController extends Controller {
             $copy_tmp = $_FILES["doc_copy"]["tmp_name"];
             $copy_new = $document->doc_type . '_' . uniqid() . "." . $copy_ext;
             $copy_path = ROOT . DS . 'uploads' . DS . $document->doc_type . DS . $copy_new;
-            //Helper::dnd($copy_tmp);
             $dir_name = ROOT . DS . 'uploads' . DS . $document->doc_type;
             if (!is_dir($dir_name)) {
                 mkdir($dir_name);
@@ -68,8 +62,9 @@ class DocumentsController extends Controller {
         $this->view->render('documents/add');
     }
 
-    public function editAction($id) {
-        $document = $this->DocumentsModel->findById((int) $id);
+    public function editAction($id)
+    {
+        $document = $this->DocumentsModel->findById((int)$id);
         $doc_type = $document->doc_type;
         if (!$document)
             Router::redirect('documents');
@@ -103,8 +98,9 @@ class DocumentsController extends Controller {
         $this->view->render('documents/edit');
     }
 
-    public function detailsAction($id) {
-        $document = $this->DocumentsModel->docHasTypeById((int) $id);
+    public function detailsAction($id)
+    {
+        $document = $this->DocumentsModel->docHasTypeById((int)$id);
         if (!$document) {
             Router::redirect('documents');
         }
@@ -112,13 +108,13 @@ class DocumentsController extends Controller {
         $this->view->render('documents/details');
     }
 
-    public function deleteAction($id) {
-        $document = $this->DocumentsModel->findById((int) $id);
+    public function deleteAction($id)
+    {
+        $document = $this->DocumentsModel->findById((int)$id);
         if ($document) {
             $document->delete();
             Session::addMsg('danger', $document->doc_title . ' has been deleted!');
         }
         Router::redirect('documents');
     }
-
 }

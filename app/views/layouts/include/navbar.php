@@ -39,15 +39,15 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fa fa-male mr-2 text-success"></i> Profile
+                    <i class="fa fa-male mr-2 text-success"></i> ข้อมูลสว่นตัว
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fa fa-key mr-2 text-warning"></i> Reset Password
+                    <i class="fa fa-key mr-2 text-warning"></i> รหัสผ่าน
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="<?=PROOT?>register/logout" class="dropdown-item">
-                    <i class="fa fa-power-off mr-2 text-danger"></i> Logout
+                    <i class="fa fa-power-off mr-2 text-danger"></i> ออกจากระบบ
                 </a>
             </div>
         </li>

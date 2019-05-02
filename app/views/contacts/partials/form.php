@@ -40,8 +40,8 @@ use Core\FormHelper; ?>
         </div>
 
         <div class="form-group col-xl-12 col-sm-6 mb-3">
-            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save</button>
-            <a href="<?= PROOT ?>contacts" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> Cancel</a>
+            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> บันทึก</button>
+            <a href="<?= PROOT ?>contacts" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
         </div>
     </div>
 </form>
