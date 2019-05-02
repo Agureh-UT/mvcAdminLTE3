@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function indexAction()
     {
-        $this->view->render('home/dashboard1');
+        $this->view->render('home/index');
     }
 
     public function dashboard1Action()
