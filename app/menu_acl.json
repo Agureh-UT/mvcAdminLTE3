@@ -1,0 +1,20 @@
+{
+    "Home": "home",
+    "Menu": {
+        "My Menu": "menu",
+        "Menu 1": "menu/first",
+        "Menu 2": "menu/second",
+        "Menu 3": "menu/third"
+    },
+    "Documents": {
+        "My Documents": "documents",
+        "Add a new Document": "documents/add"
+    },
+    "Contacts": {
+        "My Contacts": "contacts",
+        "Add Contact": "contacts/add"
+    },
+    "Register": "register/register",
+    "Login": "register/login",
+    "Logout": "register/logout"
+}
