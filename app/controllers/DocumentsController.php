@@ -22,7 +22,7 @@ class DocumentsController extends Controller
 
     public function indexAction()
     {
-        $limit = 2;
+        $limit = 10; // แสดงหน้าละ 10 รายการ
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * $limit;
 
@@ -89,7 +89,7 @@ class DocumentsController extends Controller
             }
             if ($document->save()) {
                 Session::addMsg('success', $document->doc_title . ' has been modified!');
-                Router::redirect('documents');
+                Router::redirect('documents/index');
             }
         }
         $this->view->document = $document;

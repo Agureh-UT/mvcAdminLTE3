@@ -17,10 +17,10 @@
                 Not Allowed to Access This page.!
             </h2>
         </div>
-        <div class="mb-1 text-center" style="padding-top: 10px">
+        <!--<div class="mb-1 text-center" style="padding-top: 10px">
             <a href="<?= PROOT ?>register/login" class="btn btn-success text-center"><i class="fa fa-sign-in"></i> Login</a> ||
             <a href="<?= PROOT ?>register/register" class="btn btn-info text-center"><i class="fa fa-user-circle-o"></i> Register</a>
-        </div>
+        </div>-->
     </div>
     <!-- /.card-body -->
     <div class="card-footer">

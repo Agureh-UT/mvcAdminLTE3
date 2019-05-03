@@ -20,7 +20,7 @@ use App\Models\Contacts;
                 <div class="inner">
                     <h3><?php
                     $rows = new Documents();
-                    echo $rows->docRows();
+                    echo $rows->getRows();
                     ?></h3>
                     <p>Documents</p>
                 </div>

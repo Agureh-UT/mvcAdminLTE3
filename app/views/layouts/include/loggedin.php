@@ -28,7 +28,7 @@
                 </a>
             </li>
         </ul>
-    </li> 
+    </li>
 </div>
 <!-- End Home -->
 <!-- Documents -->
@@ -44,7 +44,7 @@
         </a>
         <ul class="nav nav-treeview ul-sub">
             <li class="nav-item">
-                <a href="<?= PROOT ?>documents?page=1" class="nav-link <?= ($url[0] == 'documents' && $url[1] == 'index') ? "active" : "" ?>">
+                <a href="<?= PROOT ?>documents/index?page=1" class="nav-link <?= ($url[0] == 'documents' && $url[1] == 'index') ? "active" : "" ?>">
                     <i class="fa fa-file-text-o nav-icon"></i>
                     <p>รายการเอกสาร</p>
                 </a>
@@ -54,7 +54,7 @@
                     <i class="fa fa-file-o nav-icon"></i>
                     <p>เพิ่มรายการเอกสาร</p>
                 </a>
-            </li> 
+            </li>
         </ul>
     </li>
 </div>
