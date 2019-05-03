@@ -22,11 +22,9 @@ class DocumentsController extends Controller
 
     public function indexAction()
     {
-        $limit = 10; // แสดงหน้าละ 10 รายการ
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * $limit;
-
-        $documents = $this->DocumentsModel->docHasTypeOwner($start, $limit);
+        $start = ($page - 1) * LIMIT;
+        $documents = $this->DocumentsModel->docHasTypeOwner($start, LIMIT);
         $this->view->documents = $documents;
         $this->view->render('documents/index');
     }
@@ -66,8 +64,10 @@ class DocumentsController extends Controller
     {
         $document = $this->DocumentsModel->findById((int)$id);
         $doc_type = $document->doc_type;
+        $page = @$_POST['page'];
+
         if (!$document)
-            Router::redirect('documents');
+            Router::redirect('documents/index?page=1');
         if ($this->request->isPost()) {
             $this->request->csrfCheck();
             $document->assign($this->request->get());
@@ -89,7 +89,7 @@ class DocumentsController extends Controller
             }
             if ($document->save()) {
                 Session::addMsg('success', $document->doc_title . ' has been modified!');
-                Router::redirect('documents/index');
+                Router::redirect("documents/index?page=$page");
             }
         }
         $this->view->document = $document;

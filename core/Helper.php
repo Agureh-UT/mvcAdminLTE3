@@ -3,6 +3,7 @@
 namespace Core;
 
 use App\Models\Documents;
+use App\Models\Contacts;
 
 class Helper
 {
@@ -38,5 +39,20 @@ class Helper
     {
         $row = new Documents();
         return $row->getRows();
+    }
+
+    public static function getRowsCont($user_id)
+    {
+        $row = new Contacts();
+        return $row->getRows($user_id);
+    }
+
+    public static function backPage($page = null, $pages = null)
+    {
+        if (isset($page)) {
+            echo '/index?page=' . $page;
+        } else {
+            echo  '/index?page=' . $pages;
+        }
     }
 }

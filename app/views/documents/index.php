@@ -5,14 +5,12 @@
 <?php $this->start('body'); ?>
 
 <?php
-use App\Models\Documents;
+use Core\Helper;
 
-$rows = new Documents;
-$total = $rows->getRows();
-$limit = 10;
+$total = Helper::getRowsDoc();
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$start = ($page - 1) * $limit;
-$pages = ceil($total / $limit);
+$start = ($page - 1) * LIMIT;
+$pages = ceil($total / LIMIT);
 $prev = $page - 1;
 $next = $page + 1;
 ?>
@@ -51,7 +49,7 @@ $next = $page + 1;
                         if ($page == 1) {
                             $i = $page;
                         } else {
-                            $i = $page * 10 - 9;
+                            $i = $page * LIMIT - LIMIT +1;
                         }
                         foreach ($this->documents as $document) : ?>
                             <tr>
@@ -70,7 +68,7 @@ $next = $page + 1;
                                     <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" class="btn btn-success btn-sm" target="_blank">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm">
+                                    <a href="<?= PROOT ?>documents/edit/<?= $document->id ?>?page=<?= $_GET['page'] ?>" class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </a>
                                     <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {return false;}">
@@ -89,7 +87,7 @@ $next = $page + 1;
                                 <ul class="pagination">
                                     <?php if ($page > 1) : ?>
                                         <li class="page-item">
-                                            <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>documents/index"><i class="fa fa-backward"></i></a>
+                                            <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>documents/index?page=1"><i class="fa fa-backward"></i></a>
                                         </li>
                                         <li class="page-item">
                                             <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>documents/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>

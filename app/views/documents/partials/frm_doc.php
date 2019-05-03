@@ -3,6 +3,8 @@
 use App\Models\DocType;
 use App\Models\DocOwner;
 use Core\FormHelper;
+use Core\Helper;
+
 ?>
 <form class="form" action="<?= $this->postAction ?>" method="post" enctype="multipart/form-data">
     <?= FormHelper::csrfInput() ?>
@@ -19,12 +21,12 @@ use Core\FormHelper;
                     if ($this->document->doc_type == $docs->id) :
                         ?>
                         <option value="<?= $docs->id; ?>" selected><?= $docs->doc_type ?></option>
-                    <?php else: ?>
+                    <?php else : ?>
                         <option value="<?= $docs->id; ?>"><?= $docs->doc_type ?></option>
                     <?php
-                    endif;
-                endforeach;
-                ?>
+                endif;
+            endforeach;
+            ?>
             </select>
         </div>
         <div class="form-group col-md-4">
@@ -37,12 +39,12 @@ use Core\FormHelper;
                     if ($this->document->doc_own == $own->id) :
                         ?>
                         <option value="<?= $own->id; ?>" selected><?= $own->fname ?></option>
-                    <?php else: ?>
+                    <?php else : ?>
                         <option value="<?= $own->id; ?>"><?= $own->fname ?></option>
                     <?php
-                    endif;
-                endforeach;
-                ?>
+                endif;
+            endforeach;
+            ?>
             </select>
         </div>
         <div class="row col-md-4">
@@ -52,62 +54,65 @@ use Core\FormHelper;
 
         <div class="form-group col-xl-12 col-sm-6 mb-3">
             <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> บันทึก</button>
-            <a href="<?= PROOT ?>documents" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
+            <a href="<?= PROOT ?>documents<?= Helper::backPage(@$_GET['page'], ceil(Helper::getRowsDoc() / LIMIT)) ?>" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
         </div>
+        <input type="hidden" name="page" value="<?= $_GET['page'] ?>">
     </div>
 </form>
-<?php if(empty($this->document->id)): ?>
-<hr>
-<div><h3 class="text-danger">เอกสารที่เพิ่ม 3 ครั้งล่าสุด</h3></div>
-<div class="table-responsive">
-            <table class="table table-bordered" width="100%" cellspacing="0">
-                <thead>
+<?php if (empty($this->document->id)) : ?>
+    <hr>
+    <div>
+        <h3 class="text-danger">เอกสารที่เพิ่ม 3 ครั้งล่าสุด</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>เอกสาร</th>
+                    <th>ประเภท</th>
+                    <th>เอกสารของ</th>
+                    <th>สำเนา</th>
+                    <th>การจัดการ</th>
+                </tr>
+            </thead>
+            <!--
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th>เอกสาร</th>
+                                                                    <th>ประเภท</th>
+                                                                    <th>สำเนา</th>
+                                                                    <th>การจัดการ</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            -->
+            <tbody>
+                <?php foreach ($this->documents as $document) : ?>
                     <tr>
-                        <th>เอกสาร</th>
-                        <th>ประเภท</th>
-                        <th>เอกสารของ</th>
-                        <th>สำเนา</th>
-                        <th>การจัดการ</th>
+                        <td>
+                            <a href="<?= PROOT ?>documents/details/<?= $document->id ?>">
+                                <?= $document->doc_title ?>
+                            </a>
+                        </td>
+                        <td><?= $document->doc_type ?></td>
+                        <td><?= $document->fname ?></td>
+                        <td>
+                            <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" target="_blank">
+                                <?= $document->doc_copy ?>
+                            </a>
+                        </td>
+                        <td><a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm">
+                                <i class="fa fa-pencil-square-o"></i> แก้ไข
+                            </a>
+                            <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {
+                                                                                                                                        return false;
+                                                                                                                                    }">
+                                <i class="fa fa-trash-o"></i> ลบ
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <!--
-                <tfoot>
-                    <tr>
-                        <th>เอกสาร</th>
-                        <th>ประเภท</th>
-                        <th>สำเนา</th>
-                        <th>การจัดการ</th>
-                    </tr>
-                </tfoot>
-                -->
-                <tbody>
-                    <?php foreach ($this->documents as $document): ?>
-                        <tr>
-                            <td>
-                                <a href="<?= PROOT ?>documents/details/<?= $document->id ?>">
-                                    <?= $document->doc_title ?>
-                                </a>
-                            </td>
-                            <td><?= $document->doc_type ?></td>
-                            <td><?= $document->fname ?></td>
-                            <td>
-                                <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" target="_blank">
-                                    <?= $document->doc_copy ?>
-                                </a>
-                            </td>
-                            <td><a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-pencil-square-o"></i> แก้ไข
-                                </a>
-                                <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {
-                                                return false;
-                                            }">
-                                    <i class="fa fa-trash-o"></i> ลบ
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
 
-                </tbody>
-            </table>
-        </div>
-<?php                endif;
+            </tbody>
+        </table>
+    </div>
+<?php endif;
