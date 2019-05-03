@@ -68,15 +68,13 @@ $next = $page + 1;
                                     <?= $document->doc_type ?></td>
                                 <td>
                                     <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" class="btn btn-success btn-sm" target="_blank">
-                                        <i class="fa fa-eye"></i> แสดง
+                                        <i class="fa fa-eye"></i>
                                     </a>
                                     <a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil-square-o"></i> แก้ไข
+                                        <i class="fa fa-pencil-square-o"></i>
                                     </a>
-                                    <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {
-                                                                                                                                                                                                                                return false;
-                                                                                                                                                                                                                            }">
-                                        <i class="fa fa-trash-o"></i> ลบ
+                                    <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {return false;}">
+                                        <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
                             </tr>

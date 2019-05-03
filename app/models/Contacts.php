@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Core\Model;
 use Core\Validators\RequiredValidator;
-use Core\Validators\MaxValidator;
+use Core\Validators\UniqueValidator;
 
 class Contacts extends Model {
 
     public $id, $user_id, $fname, $lname, $email, $address, $address2, $city, $state, $zip;
-    public $home_phone, $cell_phone, $work_phone, $deleted = 0;
+    public $office, $cell_phone, $work_phone, $deleted = 0;
 
     public function __construct() {
         $table = 'contacts';
@@ -20,7 +20,8 @@ class Contacts extends Model {
     public function validator() {
         $this->runValidation(new RequiredValidator($this, ['field' => 'fname', 'msg' => 'First name is required!']));
         $this->runValidation(new RequiredValidator($this, ['field' => 'lname', 'msg' => 'Last name is required!']));
-        $this->runValidation(new RequiredValidator($this, ['field' => 'email', 'msg' => 'Email is required!']));
+        $this->runValidation(new UniqueValidator($this,['field'=>'email','msg'=>'This Email already exists!']));
+        //$this->runValidation(new RequiredValidator($this, ['field' => 'email', 'msg' => 'Email is required!']));
         $this->runValidation(new RequiredValidator($this, ['field' => 'cell_phone', 'msg' => 'Cell Phone is required!']));
     }
 
@@ -35,6 +36,10 @@ class Contacts extends Model {
         ];
         $conditions = array_merge($conditions, $params);
         return $this->find($conditions);
+    }
+
+    public function getRows($user_id) {
+        return count($this->findAllByUserId($user_id, $params = []));
     }
 
     public function findByIdAndUserId($contact_id, $user_id, $params = []) {

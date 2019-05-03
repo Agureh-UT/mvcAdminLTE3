@@ -8,7 +8,7 @@
 ?>
 <div class="card mb-3">
     <div class="card-header bg-success">
-        <i class="fas fa-file-alt fa-2x"></i>
+        <i class="fas fa-file-alt"></i>
         Contact Editing : <span class="text-danger"><?=$this->contact->fname.' '.$this->contact->lname?></span>
     </div>
     <div class="card-body">

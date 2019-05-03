@@ -1,22 +1,24 @@
 <?php
 namespace App\Models;
+
 use Core\Model;
 use Core\Cookie;
 use Core\Session;
-use App\Models\Users;
 use App\Models\UserSessions;
 use Core\Validators\RequiredValidator;
 use Core\Validators\MatchesValidator;
 use Core\Validators\UniqueValidator;
 use Core\Validators\MinValidator;
 
-class Users extends Model {
+class Users extends Model
+{
 
     private $_isLoggedIn, $_sessionName, $_cookieName, $_confirm;
     public static $currentLoggedInUser = null;
     public $id, $full_name, $email, $user_name, $password, $acl = '', $deleted = 0;
 
-    public function __construct($user = '') {
+    public function __construct($user = '')
+    {
         $table = 'users';
         parent::__construct($table);
         $this->_sessionName = CURRENT_USER_SESSION_NAME;
@@ -37,39 +39,44 @@ class Users extends Model {
         }
     }
 
-    public function validator() {
-      $this->runValidation(new RequiredValidator($this,['field'=>'full_name','msg'=>'Fullname is required!']));
-      $this->runValidation(new RequiredValidator($this,['field'=>'user_name','msg'=>'Username is required!']));
-      $this->runValidation(new UniqueValidator($this,['field'=>'user_name','msg'=>'This username already exists!']));
-      $this->runValidation(new UniqueValidator($this,['field'=>'email','msg'=>'This Email already exists!']));
-      $this->runValidation(new RequiredValidator($this,['field'=>'email', 'msg'=>'Email is required!']));
-      $this->runValidation(new MinValidator($this,['field'=>'password','rule'=>4,'msg'=>'Password must be at least 4 characters!']));
-      if($this->isNew()){
-        $this->runValidation(new MatchesValidator($this,['field'=>'password', 'rule'=>$this->_confirm, 'msg'=>'Your password do not match!']));
-      }
-      //$this->runValidation(new EmailValidator($this,['field'=>'email', 'msg'=>'Invalid email format!']));
-      //$this->runValidation(new NumericValidator($this,['field'=>'password', 'msg'=>'Password must be a number!']));
+    public function validator()
+    {
+        $this->runValidation(new RequiredValidator($this, ['field' => 'full_name', 'msg' => 'Fullname is required!']));
+        $this->runValidation(new RequiredValidator($this, ['field' => 'user_name', 'msg' => 'Username is required!']));
+        $this->runValidation(new UniqueValidator($this, ['field' => 'user_name', 'msg' => 'This username already exists!']));
+        $this->runValidation(new UniqueValidator($this, ['field' => 'email', 'msg' => 'This Email already exists!']));
+        $this->runValidation(new RequiredValidator($this, ['field' => 'email', 'msg' => 'Email is required!']));
+        $this->runValidation(new MinValidator($this, ['field' => 'password', 'rule' => 4, 'msg' => 'Password must be at least 4 characters!']));
+        if ($this->isNew()) {
+            $this->runValidation(new MatchesValidator($this, ['field' => 'password', 'rule' => $this->_confirm, 'msg' => 'Your password do not match!']));
+        }
+        //$this->runValidation(new EmailValidator($this,['field'=>'email', 'msg'=>'Invalid email format!']));
+        //$this->runValidation(new NumericValidator($this,['field'=>'password', 'msg'=>'Password must be a number!']));
     }
 
-    public function beforeSave() {
-      if($this->isNew()){
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-      }
+    public function beforeSave()
+    {
+        if ($this->isNew()) {
+            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        }
     }
 
-    public function findByUsername($username) {
+    public function findByUsername($username)
+    {
         return $this->findFirst(['conditions' => "user_name = ?", 'bind' => [$username]]);
     }
 
-    public static function currentUser() {
+    public static function currentUser()
+    {
         if (!isset(self::$currentLoggedInUser) && Session::exists(CURRENT_USER_SESSION_NAME)) {
-            $u = new Users((int) Session::get(CURRENT_USER_SESSION_NAME));
+            $u = new Users((int)Session::get(CURRENT_USER_SESSION_NAME));
             self::$currentLoggedInUser = $u;
         }
         return self::$currentLoggedInUser;
     }
 
-    public function login($rememberMe = false) {
+    public function login($rememberMe = false)
+    {
         Session::set($this->_sessionName, $this->id);
         if ($rememberMe) {
             $hash = md5(uniqid() + rand(0, 100));
@@ -81,7 +88,8 @@ class Users extends Model {
         }
     }
 
-    public static function loginUserFromCookie() {
+    public static function loginUserFromCookie()
+    {
         $userSession = UserSessions::getFromCookie();
         if ($userSession && $userSession->user_id != '') {
             $user = new self($userSession->user_id);
@@ -93,7 +101,8 @@ class Users extends Model {
         return;
     }
 
-    public function logout() {
+    public function logout()
+    {
         $userSession = UserSessions::getFromCookie();
         if ($userSession)
             $userSession->delete();
@@ -105,17 +114,20 @@ class Users extends Model {
         return true;
     }
 
-    public function acls() {
+    public function acls()
+    {
         if (empty($this->acl))
-            return[];
+            return [];
         return json_decode($this->acl, true);
     }
 
-    public function setConfirm($value) {
-      $this->_confirm = $value;
+    public function setConfirm($value)
+    {
+        $this->_confirm = $value;
     }
 
-    public function getConfirm() {
-      return $this->_confirm;
+    public function getConfirm()
+    {
+        return $this->_confirm;
     }
 }

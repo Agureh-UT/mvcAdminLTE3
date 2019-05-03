@@ -6,7 +6,7 @@
 <?php $this->start('body'); ?>
 <div class="card mb-3">
     <div class="card-header bg-success">
-        <i class="fas fa-file-alt fa-2x"></i>
+        <i class="fas fa-file-alt"></i>
         Document Editing : <span class="text-danger"><?=$this->document->doc_title?></span>
     </div>
     <div class="card-body">
