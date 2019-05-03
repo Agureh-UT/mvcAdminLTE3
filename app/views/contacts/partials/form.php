@@ -41,7 +41,7 @@ use Core\FormHelper; ?>
 
         <div class="form-group col-xl-12 col-sm-6 mb-3">
             <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> บันทึก</button>
-            <a href="<?= PROOT ?>contacts" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
+            <a href="<?= PROOT ?>contacts/index?page=1" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
         </div>
     </div>
 </form>

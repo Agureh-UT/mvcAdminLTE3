@@ -20,7 +20,7 @@ class Contacts extends Model {
     public function validator() {
         $this->runValidation(new RequiredValidator($this, ['field' => 'fname', 'msg' => 'First name is required!']));
         $this->runValidation(new RequiredValidator($this, ['field' => 'lname', 'msg' => 'Last name is required!']));
-        $this->runValidation(new UniqueValidator($this,['field'=>'email','msg'=>'This Email already exists!']));
+        //$this->runValidation(new UniqueValidator($this,['field'=>'email','msg'=>'This Email already exists!']));
         //$this->runValidation(new RequiredValidator($this, ['field' => 'email', 'msg' => 'Email is required!']));
         $this->runValidation(new RequiredValidator($this, ['field' => 'cell_phone', 'msg' => 'Cell Phone is required!']));
     }

@@ -20,7 +20,7 @@ $this->setSiteTitle('Contacts'); ?>
     $limit = 3;
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $start = ($page - 1) * $limit;
-    $pages = ceil($total / $limit);
+    $pages = (ceil($total / $limit) > 0) ? ceil($total / $limit) : 1;
     $prev = $page - 1;
     $next = $page + 1;
     ?>
@@ -60,9 +60,9 @@ $this->setSiteTitle('Contacts'); ?>
                     }
                     foreach ($this->contacts as $contact) : ?>
                         <tr>
-                                <td><?= sprintf('%03d', $i++) ?></td>
+                            <td><?= sprintf('%03d', $i++) ?></td>
                             <td>
-                                <a href="<?= PROOT ?>contacts/details/<?= $contact->id ?>?page=<?=$_GET['page']?>">
+                                <a href="<?= PROOT ?>contacts/details/<?= $contact->id ?>?page=<?= $_GET['page'] ?>">
                                     <?= $contact->displayName() ?>
                                 </a>
                             </td>
@@ -83,34 +83,41 @@ $this->setSiteTitle('Contacts'); ?>
                 </tbody>
             </table>
             <!-- Pagination -->
-            <div class="container">
-                <div class="row">
-                    <div class="">
-                        <ul class="pagination">
-                            <?php if ($page > 1) : ?>
-                                <li class="page-item">
-                                    <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>contacts/index?page=1"><i class="fa fa-backward"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>contacts/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>
-                                </li>
-                            <?php endif; ?>
-                            <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                <li class="page-item <?= ($_GET['page'] == $i) ? "active" : "" ?>">
-                                    <a class="page-link" href="<?= PROOT ?>contacts/index?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endfor; ?>
-                            <?php if ($pages != $page) : ?>
-                                <li class="page-item">
-                                    <a class="page-link" title="หน้าถัดไป" href="<?= PROOT ?>contacts/index?page=<?= $next ?>"><i class="fa fa-step-forward"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" title="หน้าสุดท้าย" href="<?= PROOT ?>contacts/index?page=<?= $pages ?>"><i class="fa fa-forward"></i></a>
-                                </li>
-                            <?php endif; ?>
+            <?php if ($total > 0) : ?>
+                <div class="container">
+                    <div class="row">
+                        <div class="">
+                            <ul class="pagination">
+                                <?php if ($page > 1) : ?>
+                                    <li class="page-item">
+                                        <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>contacts/index?page=1"><i class="fa fa-backward"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>contacts/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                                    <li class="page-item <?= ($_GET['page'] == $i) ? "active" : "" ?>">
+                                        <a class="page-link" href="<?= PROOT ?>contacts/index?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                                <?php if ($pages != $page) : ?>
+                                    <li class="page-item">
+                                        <a class="page-link" title="หน้าถัดไป" href="<?= PROOT ?>contacts/index?page=<?= $next ?>"><i class="fa fa-step-forward"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" title="หน้าสุดท้าย" href="<?= PROOT ?>contacts/index?page=<?= $pages ?>"><i class="fa fa-forward"></i></a>
+                                    </li>
+                                <?php endif; ?>
+                        </div>
                     </div>
                 </div>
-            </div> <!-- Pagination -->
+            <?php else : ?>
+                <div class="container text-danger">
+                    <h3>ไม่มีรายการที่จะแสดง</h3>
+                </div>
+            <?php endif; ?>
+            <!-- Pagination -->
         </div>
     </div>
 </div>

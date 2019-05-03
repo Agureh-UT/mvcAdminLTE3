@@ -82,34 +82,41 @@ $next = $page + 1;
                     </tbody>
                 </table>
                 <!-- Pagination -->
-                <div class="container">
-                    <div class="row">
-                        <div class="">
-                            <ul class="pagination">
-                                <?php if ($page > 1) : ?>
-                                    <li class="page-item">
-                                        <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>documents/index"><i class="fa fa-backward"></i></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>documents/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>
-                                    </li>
-                                <?php endif; ?>
-                                <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                    <li class="page-item <?= ($_GET['page'] == $i) ? "active" : "" ?>">
-                                        <a class="page-link" href="<?= PROOT ?>documents/index?page=<?= $i ?>"><?= $i ?></a>
-                                    </li>
-                                <?php endfor; ?>
-                                <?php if ($pages != $page) : ?>
-                                    <li class="page-item">
-                                        <a class="page-link" title="หน้าถัดไป" href="<?= PROOT ?>documents/index?page=<?= $next ?>"><i class="fa fa-step-forward"></i></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" title="หน้าสุดท้าย" href="<?= PROOT ?>documents/index?page=<?= $pages ?>"><i class="fa fa-forward"></i></a>
-                                    </li>
-                                <?php endif; ?>
+                <?php if ($total > 0) : ?>
+                    <div class="container">
+                        <div class="row">
+                            <div class="">
+                                <ul class="pagination">
+                                    <?php if ($page > 1) : ?>
+                                        <li class="page-item">
+                                            <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>documents/index"><i class="fa fa-backward"></i></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>documents/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                                        <li class="page-item <?= ($_GET['page'] == $i) ? "active" : "" ?>">
+                                            <a class="page-link" href="<?= PROOT ?>documents/index?page=<?= $i ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <?php if ($pages != $page) : ?>
+                                        <li class="page-item">
+                                            <a class="page-link" title="หน้าถัดไป" href="<?= PROOT ?>documents/index?page=<?= $next ?>"><i class="fa fa-step-forward"></i></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" title="หน้าสุดท้าย" href="<?= PROOT ?>documents/index?page=<?= $pages ?>"><i class="fa fa-forward"></i></a>
+                                        </li>
+                                    <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                </div> <!-- Pagination -->
+                <?php else : ?>
+                    <div class="container text-danger">
+                        <h3>ไม่มีรายการที่จะแสดง</h3>
+                    </div>
+                <?php endif; ?>
+                <!-- Pagination -->
             </div>
         </div>
     </div>

@@ -27,7 +27,7 @@ use App\Models\Contacts;
                 <div class="icon">
                     <i class="ion ion-document"></i>
                 </div>
-                <a href="<?= PROOT ?>documents" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?= PROOT ?>documents/index?page=1" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -65,7 +65,7 @@ use App\Models\Contacts;
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="<?= PROOT ?>contacts" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?= PROOT ?>contacts/index?page=1" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
