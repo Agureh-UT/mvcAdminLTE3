@@ -60,7 +60,7 @@ $next = $page + 1;
                                     <?= $document->fname ?>
                                 </td>
                                 <td>
-                                    <a href="<?= PROOT ?>documents/details/<?= $document->id ?>">
+                                    <a href="<?= PROOT ?>documents/details/<?= $document->id ?>?page=<?= $_GET['page'] ?>">
                                         <?= $document->doc_title ?>
                                     </a>
                                 </td>

@@ -62,7 +62,7 @@ $this->setSiteTitle('Contacts'); ?>
                         <tr>
                                 <td><?= sprintf('%03d', $i++) ?></td>
                             <td>
-                                <a href="<?= PROOT ?>contacts/details/<?= $contact->id ?>">
+                                <a href="<?= PROOT ?>contacts/details/<?= $contact->id ?>?page=<?=$_GET['page']?>">
                                     <?= $contact->displayName() ?>
                                 </a>
                             </td>
@@ -89,7 +89,7 @@ $this->setSiteTitle('Contacts'); ?>
                         <ul class="pagination">
                             <?php if ($page > 1) : ?>
                                 <li class="page-item">
-                                    <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>contacts/index"><i class="fa fa-backward"></i></a>
+                                    <a class="page-link" title="หน้าแรก" href="<?= PROOT ?>contacts/index?page=1"><i class="fa fa-backward"></i></a>
                                 </li>
                                 <li class="page-item">
                                     <a class="page-link" title="หน้าก่อน" href="<?= PROOT ?>contacts/index?page=<?= $prev ?>"><i class="fa fa-step-backward"></i></a>

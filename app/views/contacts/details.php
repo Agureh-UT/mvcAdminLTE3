@@ -8,8 +8,7 @@
     <h1 class="text-center blue"><?= $this->contact->displayName() ?></h1>
     <hr>
 </div>
-
-<a href="<?= PROOT ?>contacts/index" class="btn btn-secondary btn-sm">Back</a>
+<a href="<?= PROOT ?>contacts/index?page=<?= $_GET['page'] ?>" class="btn btn-secondary btn-sm">Back</a>
 <p>
     <div class="row well">
         <h2 class="text-center"></h2>

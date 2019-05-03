@@ -71,7 +71,7 @@
         </a>
         <ul class="nav nav-treeview ul-sub">
             <li class="nav-item">
-                <a href="<?= PROOT ?>contacts/index" class="nav-link <?= ($url[0] == 'contacts' && $url[1] == 'index') ? "active" : "" ?>">
+                <a href="<?= PROOT ?>contacts/index?page=1" class="nav-link <?= ($url[0] == 'contacts' && $url[1] == 'index') ? "active" : "" ?>">
                     <i class="fa fa-id-card-o nav-icon"></i>
                     <p>รายการรายชื่อ</p>
                 </a>
