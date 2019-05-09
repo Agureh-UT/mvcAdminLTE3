@@ -49,11 +49,11 @@ class Documents extends Model {
         return count($this->docHasType());
     }
 
-    public function docHasTypeOwner($start,$limit) {
+    public function docHasTypeOwner($start, $limit) {
         $sql = "SELECT doc.id,doc.doc_title,doc.doc_copy,own.fname,own.id AS own_id,type.doc_type,type.id AS type_id "
                 . "FROM documents AS doc INNER JOIN doc_type AS type ON (doc.doc_type = type.id) "
                 . "INNER JOIN doc_owner AS own ON (doc.doc_own = own.id)"
-                . "WHERE doc.deleted != 1 ORDER BY own.id,type.id,doc.doc_title LIMIT $start, $limit";
+                . "WHERE doc.deleted != 1 ORDER BY own.id,type.id,doc.id LIMIT {$start}, {$limit}";
         $data = $this->query($sql)->results();
         return $data;
     }

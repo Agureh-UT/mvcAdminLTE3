@@ -20,4 +20,4 @@ define('REMEMBER_ME_COOKIE_EXPIRY', 604800);
 
 define('ACCESS_RESTRICTED', 'Restricted');
 
-define('LIMIT', 10); // แสดงรายการต่อหน้า
+define('LIMIT', 20); // แสดงรายการต่อหน้า

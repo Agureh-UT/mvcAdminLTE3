@@ -10,18 +10,15 @@ use App\Models\Documents;
 use App\Models\DocType;
 use App\Models\Users;
 
-class DocumentsController extends Controller
-{
+class DocumentsController extends Controller {
 
-    public function __construct($controller, $action)
-    {
+    public function __construct($controller, $action) {
         parent::__construct($controller, $action);
         $this->view->setLayout('default');
         $this->load_model('Documents');
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * LIMIT;
         $documents = $this->DocumentsModel->docHasTypeOwner($start, LIMIT);
@@ -29,8 +26,7 @@ class DocumentsController extends Controller
         $this->view->render('documents/index');
     }
 
-    public function addAction()
-    {
+    public function addAction() {
         $document = new Documents();
         if ($this->request->isPost()) {
             $this->request->csrfCheck();
@@ -60,9 +56,8 @@ class DocumentsController extends Controller
         $this->view->render('documents/add');
     }
 
-    public function editAction($id)
-    {
-        $document = $this->DocumentsModel->findById((int)$id);
+    public function editAction($id) {
+        $document = $this->DocumentsModel->findById((int) $id);
         $doc_type = $document->doc_type;
         $page = @$_POST['page'];
 
@@ -89,7 +84,11 @@ class DocumentsController extends Controller
             }
             if ($document->save()) {
                 Session::addMsg('success', $document->doc_title . ' has been modified!');
-                Router::redirect("documents/index?page=$page");
+                if (isset($page) && $page != null):
+                    Router::redirect("documents/index?page=$page");
+                else :
+                    Router::redirect("documents/add");
+                endif;
             }
         }
         $this->view->document = $document;
@@ -98,9 +97,8 @@ class DocumentsController extends Controller
         $this->view->render('documents/edit');
     }
 
-    public function detailsAction($id)
-    {
-        $document = $this->DocumentsModel->docHasTypeById((int)$id);
+    public function detailsAction($id) {
+        $document = $this->DocumentsModel->docHasTypeById((int) $id);
         if (!$document) {
             Router::redirect('documents');
         }
@@ -108,13 +106,18 @@ class DocumentsController extends Controller
         $this->view->render('documents/details');
     }
 
-    public function deleteAction($id)
-    {
-        $document = $this->DocumentsModel->findById((int)$id);
+    public function deleteAction($id) {
+        $page = @$_GET['page'];
+        $document = $this->DocumentsModel->findById((int) $id);
         if ($document) {
             $document->delete();
             Session::addMsg('danger', $document->doc_title . ' has been deleted!');
         }
-        Router::redirect('documents');
+        if (isset($page) && $page != null):
+            Router::redirect("documents/index?page=$page");
+        else :
+            Router::redirect('documents/add');
+        endif;
     }
+
 }

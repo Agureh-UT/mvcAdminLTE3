@@ -4,7 +4,6 @@ use App\Models\DocType;
 use App\Models\DocOwner;
 use Core\FormHelper;
 use Core\Helper;
-
 ?>
 <form class="form" action="<?= $this->postAction ?>" method="post" enctype="multipart/form-data">
     <?= FormHelper::csrfInput() ?>
@@ -24,9 +23,9 @@ use Core\Helper;
                     <?php else : ?>
                         <option value="<?= $docs->id; ?>"><?= $docs->doc_type ?></option>
                     <?php
-                endif;
-            endforeach;
-            ?>
+                    endif;
+                endforeach;
+                ?>
             </select>
         </div>
         <div class="form-group col-md-4">
@@ -42,9 +41,9 @@ use Core\Helper;
                     <?php else : ?>
                         <option value="<?= $own->id; ?>"><?= $own->fname ?></option>
                     <?php
-                endif;
-            endforeach;
-            ?>
+                    endif;
+                endforeach;
+                ?>
             </select>
         </div>
         <div class="row col-md-4">
@@ -54,9 +53,23 @@ use Core\Helper;
 
         <div class="form-group col-xl-12 col-sm-6 mb-3">
             <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> บันทึก</button>
-            <a href="<?= PROOT ?>documents<?= Helper::backPage(@$_GET['page'], ceil(Helper::getRowsDoc() / LIMIT)) ?>" class="btn btn-warning btn-sm"><i class="fa fa-window-close"></i> ยกเลิก</a>
+            <?php if (empty($_GET['page'])) : ?> <!-- Get no value of page -->
+                <?php if (empty($this->document->id)) : ?> <!-- Not edit document -->
+                    <a href="<?= PROOT ?>documents/index?page=1" class="btn btn-warning btn-sm">
+                        <i class="fa fa-window-close"></i> ยกเลิก
+                    </a>
+                <?php else : ?> <!-- Edit document-->
+                    <a href="<?= PROOT ?>documents/add" class="btn btn-warning btn-sm">
+                        <i class="fa fa-window-close"></i> ยกเลิก
+                    </a>
+                <?php endif; ?> <!-- Get no value of page -->
+            <?php else : ?> <!-- Get value of page -->
+                <a href="<?= PROOT ?>documents<?= Helper::backPage(@$_GET['page'], ceil(Helper::getRowsDoc() / LIMIT)) ?>" class="btn btn-warning btn-sm">
+                    <i class="fa fa-window-close"></i> ยกเลิก
+                </a>
+            <?php endif; ?>
         </div>
-        <input type="hidden" name="page" value="<?= $_GET['page'] ?>">
+        <input type="hidden" name="page" value="<?= @$_GET['page'] ?>">
     </div>
 </form>
 <?php if (empty($this->document->id)) : ?>
@@ -76,15 +89,15 @@ use Core\Helper;
                 </tr>
             </thead>
             <!--
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th>เอกสาร</th>
-                                                                    <th>ประเภท</th>
-                                                                    <th>สำเนา</th>
-                                                                    <th>การจัดการ</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                            -->
+                                                                                                            <tfoot>
+                                                                                                                <tr>
+                                                                                                                    <th>เอกสาร</th>
+                                                                                                                    <th>ประเภท</th>
+                                                                                                                    <th>สำเนา</th>
+                                                                                                                    <th>การจัดการ</th>
+                                                                                                                </tr>
+                                                                                                            </tfoot>
+            -->
             <tbody>
                 <?php foreach ($this->documents as $document) : ?>
                     <tr>
@@ -100,13 +113,14 @@ use Core\Helper;
                                 <?= $document->doc_copy ?>
                             </a>
                         </td>
-                        <td><a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm">
-                                <i class="fa fa-pencil-square-o"></i> แก้ไข
+                        <td><a href="<?= PROOT ?>documents/edit/<?= $document->id ?>" class="btn btn-warning btn-sm" title="แก้ไข">
+                                <i class="fa fa-pencil-square-o"></i>
                             </a>
-                            <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {
-                                                                                                                                        return false;
-                                                                                                                                    }">
-                                <i class="fa fa-trash-o"></i> ลบ
+                            <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" 
+                               onclick="if (!confirm('Are you sure?')) {
+                                           return false;
+                                       }" title="ลบ">
+                                <i class="fa fa-trash-o"></i>
                             </a>
                         </td>
                     </tr>
@@ -115,4 +129,7 @@ use Core\Helper;
             </tbody>
         </table>
     </div>
-<?php endif;
+    <?php
+
+
+ endif;

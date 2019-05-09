@@ -5,7 +5,9 @@
 <?php $this->start('body'); ?>
 
 <?php
+
 use Core\Helper;
+use App\Models\DocType;
 
 $total = Helper::getRowsDoc();
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -43,15 +45,16 @@ $next = $page + 1;
                         <th>การจัดการ</th>
                     </tr>
                 </tfoot>
-                -->
+                    -->
                     <tbody>
                         <?php
                         if ($page == 1) {
                             $i = $page;
                         } else {
-                            $i = $page * LIMIT - LIMIT +1;
+                            $i = $page * LIMIT - LIMIT + 1;
                         }
-                        foreach ($this->documents as $document) : ?>
+                        foreach ($this->documents as $document) :
+                            ?>
                             <tr>
                                 <td><?= sprintf('%03d', $i++) ?></td>
                                 <td>
@@ -65,13 +68,16 @@ $next = $page + 1;
                                 <td>
                                     <?= $document->doc_type ?></td>
                                 <td>
-                                    <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" class="btn btn-success btn-sm" target="_blank">
+                                    <a href="<?= PROOT . 'uploads/' . $document->type_id . '/' . $document->doc_copy ?>" class="btn btn-success btn-sm" target="_blank" title="แสดง">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="<?= PROOT ?>documents/edit/<?= $document->id ?>?page=<?= $_GET['page'] ?>" class="btn btn-warning btn-sm">
+                                    <a href="<?= PROOT ?>documents/edit/<?= $document->id ?>?page=<?= $_GET['page'] ?>" class="btn btn-warning btn-sm" title="แก้ไข">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </a>
-                                    <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>" class="btn btn-danger btn-sm" onclick="if (!confirm('Are you sure?')) {return false;}">
+                                    <a href="<?= PROOT ?>documents/delete/<?= $document->id ?>?page=<?= $_GET['page'] ?>" class="btn btn-danger btn-sm" 
+                                       onclick="if (!confirm('Are you sure?')) {
+                                                       return false;
+                                                   }" title="ลบ">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
@@ -119,4 +125,5 @@ $next = $page + 1;
         </div>
     </div>
 </div>
-<?php $this->end();
+<?php
+$this->end();
